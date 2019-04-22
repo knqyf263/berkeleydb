@@ -178,47 +178,103 @@ func (handle *Db) Cursor() (*Cursor, error) {
 	return &Cursor{dbc}, nil
 }
 
-//GetNext moves the cursor to the next entry and returns the key/value pair
-func (cursor *Cursor) GetNext() (string, string, error) {
+//GetNext moves the cursor to the next entry and returns the key/value []byte pair
+func (cursor *Cursor) GetNext() ([]byte, []byte, error) {
+	var key, value C.DBT
+
+	ret := C.go_cursor_get_next(cursor.dbc, &key, &value)
+
+	pkey := unsafe.Pointer(key.data)
+	bkey := C.GoBytes(pkey, C.int(key.size))
+	pvalue := unsafe.Pointer(value.data)
+	bvalue := C.GoBytes(pvalue, C.int(value.size))
+
+	return bkey, bvalue, createError(ret)
+}
+
+//GetNextString moves the cursor to the next entry and returns the key/value string pair
+func (cursor *Cursor) GetNextString() (string, string, error) {
 	value := C.CString("")
 	defer C.free(unsafe.Pointer(value))
 	key := C.CString("")
 	defer C.free(unsafe.Pointer(key))
 
-	ret := C.go_cursor_get_next(cursor.dbc, key, value)
+	ret := C.go_cursor_get_next_string(cursor.dbc, key, value)
 	return C.GoString(key), C.GoString(value), createError(ret)
 }
 
-//GetPrevious moves the cursor to the previous entry and returns the key/value pair
-func (cursor *Cursor) GetPrevious() (string, string, error) {
+//GetPrevious moves the cursor to the previous entry and returns the key/value []byte pair
+func (cursor *Cursor) GetPrevious() ([]byte, []byte, error) {
+	var key, value C.DBT
+
+	ret := C.go_cursor_get_prev(cursor.dbc, &key, &value)
+
+	pkey := unsafe.Pointer(key.data)
+	bkey := C.GoBytes(pkey, C.int(key.size))
+	pvalue := unsafe.Pointer(value.data)
+	bvalue := C.GoBytes(pvalue, C.int(value.size))
+
+	return bkey, bvalue, createError(ret)
+}
+
+//GetPreviousString moves the cursor to the previous entry and returns the key/value string pair
+func (cursor *Cursor) GetPreviousString() (string, string, error) {
 	value := C.CString("")
 	defer C.free(unsafe.Pointer(value))
 	key := C.CString("")
 	defer C.free(unsafe.Pointer(key))
 
-	ret := C.go_cursor_get_prev(cursor.dbc, key, value)
+	ret := C.go_cursor_get_prev_string(cursor.dbc, key, value)
 	return C.GoString(key), C.GoString(value), createError(ret)
 }
 
-//GetFirst moves the cursor to the first entry and returns the key/value pair
-func (cursor *Cursor) GetFirst() (string, string, error) {
+//GetFirst moves the cursor to the first entry and returns the key/value []byte pair
+func (cursor *Cursor) GetFirst() ([]byte, []byte, error) {
+	var key, value C.DBT
+
+	ret := C.go_cursor_get_first(cursor.dbc, &key, &value)
+
+	pkey := unsafe.Pointer(key.data)
+	bkey := C.GoBytes(pkey, C.int(key.size))
+	pvalue := unsafe.Pointer(value.data)
+	bvalue := C.GoBytes(pvalue, C.int(value.size))
+
+	return bkey, bvalue, createError(ret)
+}
+
+//GetFirstString moves the cursor to the first entry and returns the key/value string pair
+func (cursor *Cursor) GetFirstString() (string, string, error) {
 	value := C.CString("")
 	defer C.free(unsafe.Pointer(value))
 	key := C.CString("")
 	defer C.free(unsafe.Pointer(key))
 
-	ret := C.go_cursor_get_first(cursor.dbc, key, value)
+	ret := C.go_cursor_get_first_string(cursor.dbc, key, value)
 	return C.GoString(key), C.GoString(value), createError(ret)
 }
 
-//GetLast moves the cursor to the last entry and returns the key/value pair
-func (cursor *Cursor) GetLast() (string, string, error) {
+//GetLast moves the cursor to the last entry and returns the key/value []byte pair
+func (cursor *Cursor) GetLast() ([]byte, []byte, error) {
+	var key, value C.DBT
+
+	ret := C.go_cursor_get_last(cursor.dbc, &key, &value)
+
+	pkey := unsafe.Pointer(key.data)
+	bkey := C.GoBytes(pkey, C.int(key.size))
+	pvalue := unsafe.Pointer(value.data)
+	bvalue := C.GoBytes(pvalue, C.int(value.size))
+
+	return bkey, bvalue, createError(ret)
+}
+
+//GetLastString moves the cursor to the last entry and returns the key/value string pair
+func (cursor *Cursor) GetLastString() (string, string, error) {
 	value := C.CString("")
 	defer C.free(unsafe.Pointer(value))
 	key := C.CString("")
 	defer C.free(unsafe.Pointer(key))
 
-	ret := C.go_cursor_get_last(cursor.dbc, key, value)
+	ret := C.go_cursor_get_last_string(cursor.dbc, key, value)
 	return C.GoString(key), C.GoString(value), createError(ret)
 }
 

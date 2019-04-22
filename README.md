@@ -1,9 +1,5 @@
-[![GoDoc](https://godoc.org/github.com/jsimonetti/berkeleydb?status.svg)](https://godoc.org/github.com/jsimonetti/berkeleydb)
-[![Travis](https://api.travis-ci.org/jsimonetti/berkeleydb.svg?branch=master)](https://travis-ci.org/jsimonetti/berkeleydb)
+[![GoDoc](https://godoc.org/github.com/knqyf263/berkeleydb?status.svg)](https://godoc.org/github.com/knqyf263/berkeleydb)
 
-
-# BEWARE #
-This library is unmaintained and may stop working at any time.
 
 ### BerkeleyDB Bindings
 
@@ -21,7 +17,7 @@ package main
 import (
         "fmt"
 
-        "github.com/jsimonetti/berkeleydb"
+        "github.com/knqyf263/berkeleydb"
 )
 
 func main() {
