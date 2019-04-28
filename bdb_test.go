@@ -3,7 +3,7 @@ package berkeleydb_test
 import (
 	"testing"
 
-	"github.com/jsimonetti/berkeleydb"
+	"github.com/knqyf263/berkeleydb"
 )
 
 const TestFilename = "test_db.db"

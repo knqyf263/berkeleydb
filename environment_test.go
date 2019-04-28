@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/jsimonetti/berkeleydb"
+	"github.com/knqyf263/berkeleydb"
 )
 
 const TestDirectory = "./TEST_ENV"

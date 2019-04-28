@@ -7,7 +7,6 @@ package berkeleydb
 import "C"
 
 import (
-	"errors"
 	"fmt"
 	"unsafe"
 )
@@ -294,16 +293,26 @@ type DBError struct {
 	Message string
 }
 
+// Database error
+const (
+	DbNotFound       = C.DB_NOTFOUND
+	DbKeyEmpty       = C.DB_KEYEMPTY
+	DbKeyExist       = C.DB_KEYEXIST
+	DbLockDeadLock   = C.DB_LOCK_DEADLOCK
+	DbLockNotGranted = C.DB_LOCK_NOTGRANTED
+	DbRunRecovery    = C.DB_RUNRECOVERY
+)
+
 func createError(code C.int) error {
 	if code == 0 {
 		return nil
 	}
 	msg := C.db_strerror(code)
 	e := DBError{int(code), C.GoString(msg)}
-	return errors.New(e.Error())
+	return e
 }
 
 // Error return the string representation of the error
-func (e *DBError) Error() string {
+func (e DBError) Error() string {
 	return fmt.Sprintf("%d: %s", e.Code, e.Message)
 }
