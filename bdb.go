@@ -1,6 +1,9 @@
 package berkeleydb
 
 // #cgo LDFLAGS: -ldb
+// #cgo linux LDFLAGS: -lssl -lcrypto
+// #cgo darwin CFLAGS: -I/usr/local/include
+// #cgo darwin LDFLAGS: -L/usr/local/lib
 // #include <db.h>
 // #include <stdlib.h>
 // #include "bdb.h"
